@@ -27,7 +27,7 @@ object Role {
     json.validate[String].getOrElse(JsError("role is not supported")) match {
       case "User" => JsSuccess(UserRole)
       case "Admin" => JsSuccess(AdminRole)
-      case _ => JsError(s"Invalid Role: $json")
+      case _ => JsError(s"Invalid Role: \$json")
     }
   }
 
@@ -50,10 +50,10 @@ object Role {
       case Right("Admin") => Right(AdminRole)
       case Right("User") => Right(UserRole)
       case Right(r) =>
-        println(s"Unknown role: $r")
+        println(s"Unknown role: \$r")
         Right(NoRole)
       case Left(e) =>
-        println(s"Failed to decode role: $e")
+        println(s"Failed to decode role: \$e")
         Right(NoRole)
     }
   }

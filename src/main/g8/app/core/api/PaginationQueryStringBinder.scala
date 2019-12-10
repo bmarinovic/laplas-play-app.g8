@@ -38,11 +38,11 @@ object PaginationQueryStringBinder
           case (Right(_), Left(error)) =>
             Left(error)
           case (Left(error1), Left(error2)) =>
-            Left(s"$error1, $error2")
+            Left(s"\$error1, \$error2")
         }
 
       override def unbind(key: String, pagination : Pagination): String =
-        s"${stringBinder.unbind("pageNumber", pagination.pageNumber)}&${stringBinder.unbind("pageSize", pagination.pageSize)}"
+        s"\${stringBinder.unbind("pageNumber", pagination.pageNumber)}&\${stringBinder.unbind("pageSize", pagination.pageSize)}"
     }
   }
 }

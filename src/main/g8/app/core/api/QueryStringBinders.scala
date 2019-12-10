@@ -2,8 +2,6 @@ package core.api
 
 import play.api.mvc.QueryStringBindable
 
-import scala.language.implicitConversions
-
 object QueryStringBinders
 {
   implicit def listBinder(implicit stringBinder: QueryStringBindable[String]) =
@@ -14,7 +12,7 @@ object QueryStringBinders
         stringBinder.bind(key, params).map(_.right.map(_.split(COMMA).toList))
 
       override def unbind(key: String, strings: List[String]): String =
-        s"""$key=${strings.mkString(COMMA)}"""
+        s"""\$key=\${strings.mkString(COMMA)}"""
     }
   }
 

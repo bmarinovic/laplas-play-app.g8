@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import core.api.Role
 import core.jwt.JwtApiV1
 import javax.inject.Singleton
-import play.api.libs.json.Format
 import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
