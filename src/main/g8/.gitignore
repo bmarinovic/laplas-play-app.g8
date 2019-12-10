@@ -1,3 +1,27 @@
+*.class
+*.log
+*.tgz
+
+# sbt specific
+.cache/
+.history/
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+.idea/*
+*.iml
+.vscode/*
+.metals/
+.bloop/
+
 logs
 target
 /.idea
@@ -6,3 +30,8 @@ target
 /.project
 /.settings
 /RUNNING_PID
+
+# Mac-specific files
+**/.DS_Store
+
+.g8/
