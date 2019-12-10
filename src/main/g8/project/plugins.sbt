@@ -4,3 +4,6 @@ addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen"   % "$slickCodegenPlug
 addSbtPlugin("com.typesafe.play"    % "sbt-plugin"          % "2.7.0")
 // we need to add postgres connector for slick codegen plugin
 libraryDependencies += "org.postgresql" % "postgresql" % "$postgresqlVersion$"
+
+lazy val root = (project in file(".")).dependsOn(laplasCodegenPlugin)
+lazy val laplasCodegenPlugin = RootProject(uri("file:///home/bade/git/boilerplate"))

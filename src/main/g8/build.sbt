@@ -39,7 +39,7 @@ lazy val root = (project in file("."))
     slickCodegenDatabaseUser := "postgres",
     slickCodegenDatabasePassword := "postgres",
     slickCodegenJdbcDriver := "org.postgresql.Driver",
-    slickCodegenOutputPackage := "$organization$",
+    slickCodegenOutputPackage := "$organization$.$name$",
     slickCodegenOutputDir := file("./app"),
     slickCodegenExcludedTables := Seq("play_evolutions"),
     slickCodegenCodeGenerator := { model: slick.model.Model =>
