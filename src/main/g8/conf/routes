@@ -2,3 +2,10 @@
 # This file defines all application routes (Higher priority routes first)
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
+
+$if(useJwt.truthy)$
+# Login
+POST     /api/v1/jwt/login                      core.controllers.JwtController.login
+POST     /api/v1/jwt/refreshToken               core.controllers.JwtController.refreshToken
+GET     /api/v1/jwt/introspect                  core.controllers.JwtController.introspect
+$endif$

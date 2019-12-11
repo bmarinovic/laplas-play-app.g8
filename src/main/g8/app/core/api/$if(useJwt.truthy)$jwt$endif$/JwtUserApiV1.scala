@@ -1,13 +1,17 @@
-package core.jwt
+package core.api.jwt
 
+import com.google.inject.ImplementedBy
 import core.api.Role
-import play.api.libs.json.{Format, Json}
+import hr.laplacian.laplas.commons.error.Eor
+import play.api.libs.json.{ Format, Json }
 
 import scala.concurrent.Future
 
-object UserApiV1 {
+object JwtUserApiV1 {
+
+  @ImplementedBy(classOf[JwtUserApiV1Impl])
   trait Service {
-    def login(username: String, password: String): Future[Option[Contract.UserIdentity]]
+    def login(login: Contract.Login): Future[Eor[Option[Contract.UserIdentity]]]
   }
 
   object Contract {

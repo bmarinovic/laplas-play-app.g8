@@ -2,7 +2,7 @@ package core.actions
 
 import com.google.inject.Inject
 import core.api.Role
-import core.jwt.JwtApiV1
+import core.api.jwt.JwtApiV1
 import javax.inject.Singleton
 import play.api.mvc._
 

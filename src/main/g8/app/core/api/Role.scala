@@ -57,4 +57,9 @@ object Role {
         Right(NoRole)
     }
   }
+
+  val dbStringToRole: Map[String, Role] = Map(
+    AdminRole.name -> AdminRole,
+    UserRole.name  -> UserRole
+  )
 }

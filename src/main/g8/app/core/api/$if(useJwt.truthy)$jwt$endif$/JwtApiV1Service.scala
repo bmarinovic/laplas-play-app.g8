@@ -1,8 +1,8 @@
-package core.jwt
+package core.api.jwt
 
 import java.time.Instant
 
-import core.jwt.JwtApiV1.Contract
+import core.api.jwt.JwtApiV1.Contract
 import hr.laplacian.laplas.commons.error.{Eor, SimpleUuidError}
 import io.circe.Decoder
 import io.circe.syntax._
@@ -28,12 +28,13 @@ class JwtApiV1Service @Inject
   private val signingSecret = authConfig.get[String]("secret")
 
   private val jwtDataKey = "data"
+  private val userIdKey  = "userId"
 
-  override def buildTokenPair(jwtData: Contract.JwtData, jti: Option[String]): Future[Eor[Contract.JwtTokenPair]] = {
+  override def buildTokenPair(jwtData: Contract.JwtData, jwtId: Option[String]): Future[Eor[Contract.JwtTokenPair]] = {
     val refreshTokenClaim: JWTClaims = JWTClaims(
-      jwtId = jti.orElse(Some(SecureRandomId.Interactive.generate)),
+      jwtId = jwtId.orElse(Some(SecureRandomId.Interactive.generate)),
       expiration = Some(Instant.now.plusSeconds(refreshTokenTTL.toSeconds)),
-      customFields = Seq(("userId", jwtData.userId.asJson))
+      customFields = Seq((userIdKey, jwtData.userId.asJson))
     )
 
     val accessTokenClaim = JWTClaims(
@@ -56,8 +57,8 @@ class JwtApiV1Service @Inject
     JWTMacImpure.verifyAndParse[HMACSHA256](refreshToken, signingKey)
       .map(_.body)
       .map(claim => {
-        (claim.jwtId, claim.getCustom[String]("userId")) match {
-          case (Some(jti), Right(id)) => Right(Contract.RefreshTokenClaim(jti, id))
+        (claim.jwtId, claim.getCustom[String](userIdKey)) match {
+          case (Some(jwtId), Right(id)) => Right(Contract.RefreshTokenClaim(jwtId, id))
           case _ => Left(SimpleUuidError("JWT_CLAIM_ERROR"))
         }
       }) match {

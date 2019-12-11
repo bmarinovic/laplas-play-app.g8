@@ -1,4 +1,4 @@
-package core.jwt
+package core.api.jwt
 
 import com.google.inject.ImplementedBy
 import core.api.Role
@@ -14,7 +14,7 @@ object JwtApiV1
   @ImplementedBy(classOf[JwtApiV1Service])
   trait Service
   {
-    def buildTokenPair(userIdentity: Contract.JwtData, jti: Option[String] = None): Future[Eor[Contract.JwtTokenPair]]
+    def buildTokenPair(userIdentity: Contract.JwtData, jwtId: Option[String] = None): Future[Eor[Contract.JwtTokenPair]]
     def getRefreshTokenClaim(refreshToken: String): Future[Eor[Contract.RefreshTokenClaim]]
     def introspect(jwtToken: String): Future[Eor[Contract.JwtData]]
   }
@@ -22,7 +22,7 @@ object JwtApiV1
   object Contract
   {
     case class RefreshToken(refreshToken: String)
-    case class RefreshTokenClaim(jti: String, userId: String)
+    case class RefreshTokenClaim(jwtId: String, userId: String)
     case class JwtTokenPair(accessToken: String, refreshToken: String)
     case class JwtData(userId: String, username: String, role: Role)
 
